@@ -6,8 +6,8 @@ import axios from 'axios';
 export default function Login() {
 
       const [credentials , setCredentials] = useState({
-        email:undefined,
-        password:undefined,
+        // email:undefined,
+        // password:undefined,
       });
 
       const {loading,error,dispatch} = useContext(AuthContext)
@@ -27,10 +27,15 @@ export default function Login() {
         console.log(credentials);
         try{
 
-          const res = await axios.post()
-          if(res.data.isAdmin){
-          dispatch({type:"LOGIN_SUCCESS", payload:res.data.details})
-          navigate("/");
+          const res = await axios.post('http://127.0.0.1:5000/api/auth/login',credentials)
+          
+          console.log(res.data.data.type);
+         
+          if(res.data.data.type=='admin'){
+
+            dispatch({type:"LOGIN_SUCCESS", payload:res.data.data})
+            navigate("/");
+        
           }else{
 
             dispatch({
@@ -49,7 +54,7 @@ export default function Login() {
 
 
   return (
-    <main>
+    <>
     <div className="container">
 
       <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -116,6 +121,6 @@ export default function Login() {
       </section>
 
     </div>
-  </main>
+  </>
   )
 }

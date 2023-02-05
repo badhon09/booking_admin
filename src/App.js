@@ -4,6 +4,8 @@ import Dashboard from './components/pages/dashboard/Dashboard';
 import Roomlist from './components/pages/rooms/Roomlist';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import Addroom from './components/pages/rooms/Addroom';
+import Test from './Test/Test';
 
 function App() {
 
@@ -22,9 +24,15 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route path='/' element={<Dashboard/>}/>
+        <Route path='/' element={
+          <ProtectedRoute>
+              <Dashboard/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/test' element={<Test/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/rooms' element={<Roomlist/>}/>
+        <Route path='/rooms/add' element={<Addroom/>}/>
       </Routes>
     
     
