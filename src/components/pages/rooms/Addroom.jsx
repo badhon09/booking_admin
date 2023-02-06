@@ -4,7 +4,7 @@ import Layout from '../../layout/Layout'
 
 export default function Addroom() {
   const [formData,setFormData] = useState({});
-  const [file, setFile] = useState(null);
+ 
   
   const handleChange = (e) => {
     setFormData({
@@ -14,18 +14,19 @@ export default function Addroom() {
     
   }
   const handlePhoto = (e) => {
-    setFormData({...formData, photo: e.target.files[0]});
+    setFormData({...formData, photos: e.target.files[0]});
   }
 
-  const formSubmit = (e) => {
+  const formSubmit = async(e) => {
     e.preventDefault();
+    console.log(formData)
 
     const url = process.env.REACT_APP_API_URL;
-    const res = axios.post('http://127.0.0.1:5000/api/rooms/add/63d4c3114f3097d74d011437',formData)
-    .then(res => console.log(res))
+    const res = await axios.post('http://127.0.0.1:5000/api/rooms/add/63d4c3114f3097d74d011437',formData)
+    .then(res => console.log(res.data))
     .catch(err => console.log(err))
     //formData.append({'photo':file})
-    console.log(res);
+    //console.log(res);
   }
 
   return (
@@ -59,13 +60,13 @@ export default function Addroom() {
                 <div className="row mb-3">
                   <label for="inputNumber" className="col-sm-2 col-form-label">Max Person</label>
                   <div className="col-sm-10">
-                    <input type="number" className="form-control" name='maxPerson'  onChange={handleChange}/>
+                    <input type="number" className="form-control" name='maxPeople' value={formData.maxPeople}  onChange={handleChange}/>
                   </div>
                 </div>
                 <div className="row mb-3">
                   <label for="inputNumber" className="col-sm-2 col-form-label">Desccription</label>
                   <div className="col-sm-10">
-                    <input type="number" className="form-control" name='desc' onChange={handleChange}/>
+                    <input type="number" className="form-control" name='desc' value={formData.desc}  onChange={handleChange}/>
                   </div>
                 </div>
       
